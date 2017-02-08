@@ -1,0 +1,117 @@
+# core {{{
+[core]
+	excludesfile = /Users/brendan/.gitignore_global
+	editor = /usr/bin/vim
+# }}}
+
+# user {{{
+[user]
+	name = Brendan Schulz
+	email = brendan.schulz@gmail.com
+# }}}
+
+# color {{{
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+	ui = auto
+
+[color "branch"]
+	current = red reverse
+	local = blue
+	remote = green
+
+[color "diff"]
+	meta = yellow
+	frag = magenta
+	old = red bold
+	new = green
+	plain = white
+
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+
+# }}}
+
+# push/pull/diff/options {{{
+
+[push]
+	default = matching
+[pull]
+	default = current
+[diff]
+	memonicprefix = true
+	renames = copies
+	tool = diffmerge
+[branch]
+	autosetuprebase = always
+[apply]
+	whitespace = nowarn
+
+# }}}
+
+# difftools {{{
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+# }}}
+
+
+
+# aliases {{{
+
+[alias]
+	ig = update-index --assume-unchanged
+	unig = update-index --no-assume-unchanged
+	iged = !git ls-files -v | grep "^[[:lower:]]"
+	bp = big-picture
+  cl = "!git branch --merged | grep -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+  cleanlocal = "!git branch --merged | grep -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+  cr = "!git branch -r --merged | grep -v '\\*\\|master\\|develop' | sed 's/origin\\///' | xargs -n 1 git push --delete origin"
+  cleanremote = "!git branch -r --merged | grep -v '\\*\\|master\\|develop' | sed 's/origin\\///' | xargs -n 1 git push --delete origin"
+	br = branch
+	logp = log --pretty=format:\"%h %s\" --graph
+	caa = commit -a --amend -C HEAD
+	cm = commit -m
+	cam = commit -am
+	st = status
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	g = grep --break --heading --line-number
+#	up = pull --rebase --autostash
+# }}}
+
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+
+[difftool]
+	prompt = false
+
+[rerere]
+	enabled = true
+
+[rebase]
+	autosquash = true
+[difftool "diffmerge"]
+	cmd = /usr/local/bin/diffmerge \"$LOCAL\" \"$REMOTE\"
+[merge]
+	tool = diffmerge
+[mergetool "diffmerge"]
+	trustExitCode = true
+	cmd = /usr/local/bin/diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[grep]
+	extendRegexp = true
+	lineNumber = true
