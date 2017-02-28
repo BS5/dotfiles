@@ -1,6 +1,4 @@
-
-
-
+# DOTFILES
 
 ## Programs
 
@@ -10,8 +8,6 @@
 * [Markdown Quick Look](https://github.com/toland/qlmarkdown/)
 * https://parall.ax/vtop
 * https://localtunnel.github.io/www/
-
-
 
 
 ## Interesting but I don't use
