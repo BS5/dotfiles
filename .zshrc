@@ -46,21 +46,19 @@ alias lock='/System/Library/CoreServices/Menu\ Extras/user.menu/Contents/Resourc
 # Set vi editor to vim
 alias vi="vim"
 
+# Set v to vagrant
+alias v="vagrant"
+
 # Clear DNS cache
 alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;echo 'cache flushed'"
 
 # Bundle Exec
 alias be='bundle exec'
 alias ber='bundle exec rake'
+alias berc='bundle exec rails console'
 
-# RaceNote Aliases
-alias prr='cd ~/Projects/racenote/racenote'
-alias prt='cd ~/Projects/racenote/transcribe'
-alias prj='cd ~/Projects/racenote/racenotejs'
-alias prd='cd ~/Projects/racenote/racedayjs'
-
+# RaaceNote
 alias rnworkers='COUNT=2 QUEUES=demo,raceday bundle exec rails resque:workers'
-
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
@@ -89,10 +87,6 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 # User bin
 export PATH=~/bin:$PATH
 
-# rbenv
-export PATH=$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH
-eval "$(rbenv init -)"
-
 # Gradle
 export GRADLE_HOME=/usr/local/bin/gradle
 
@@ -104,6 +98,9 @@ export PATH=/usr/local/share/npm/bin:$PATH
 
 # Set case sensitivity off
 set completion-ignore-case on
+
+# rbenv
+eval "$(rbenv init -)"
 
 # Set command mode to vi style
 set -o vi
