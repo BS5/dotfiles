@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# 
+# Get today's database backups
+# 
+
+TODAY=$(date +%Y%m%d)
+BUCKETS=(racenote transcribe)
+LOCAL_DATABASES=(racenote_development transcribe_develop)
+
+function get_dump {
+  echo "aws s3 cp s3://rn-db-dumps/$1 ./ --recursive --exclude \"*\" --include \"$1.production.$2*\""
+  aws s3 cp s3://rn-db-dumps/$1 ./ --recursive --exclude "*" --include "$1.production.$2*"
+}
+
+for i in ${BUCKETS[@]}; do
+  get_dump ${i} $TODAY
+done
+
+# Restore databases locally
+if [ "$1" == "refresh" ]; then
+  echo "Restoring databases..."
+  # Refresh local Racenote database
+  pg_restore --clean --dbname=racenote_development --no-owner --jobs=2 -v racenote.production.$TODAY*.pgdump
+  # Refresh local Transcribe database
+  pg_restore --clean --dbname=transcribe_develop --no-owner --jobs=2 -v transcribe.production.$TODAY*.pgdump
+  
+  # Cleanup downloads
+  rm racenote.production.$TODAY*.pgdump
+  rm transcribe.production.$TODAY*.pgdump
+fi
+
+echo "done"
+exit 0
