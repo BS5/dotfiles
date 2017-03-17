@@ -44,11 +44,15 @@ $ tar -zxvf archive-name.tar.gz -C /destination
 
 List files on AWS S3
 
-$ aws s3 ls s3://rn-db-dumps/racenote/racenote
+```
+$ aws s3 ls s3://bucket
+```
 
 Copy database backup
 
+```
 $ aws s3 cp s3://bucket/filename ./
+```
 
 Get today's backup files
 
