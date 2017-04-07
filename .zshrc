@@ -32,7 +32,6 @@ alias gu='git up'
 alias glg='git log --oneline --abbrev-commit --all --graph --decorate --color'
 alias gflg="git log --graph --pretty=format:'%Cred%h%Creset %C(bold blue)%an%C(reset) - %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias grm='git rm $(git ls-files --deleted)'
-alias gup='git up'
 
 # ls Aliases to match servers
 # alias ls='ls --color=auto'
@@ -95,6 +94,11 @@ export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
 # NPM
 export PATH=/usr/local/share/npm/bin:$PATH
+
+#######################################################
+# RACENOTE
+source $HOME/.racenote
+######################################################
 
 # Set case sensitivity off
 set completion-ignore-case on

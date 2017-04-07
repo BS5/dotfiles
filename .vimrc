@@ -7,7 +7,6 @@
 execute pathogen#infect()
 " }}}
 
-
 " Files {{{
 filetype off
 filetype plugin indent on
@@ -20,6 +19,13 @@ set history=1000
 set undolevels=1000
 set nobackup
 set nowritebackup
+" }}}
+
+" Editing {{{
+
+" Fix Vim 8.0 to backspace over line breaks
+set backspace=2
+
 " }}}
 
 " Folding {{{
@@ -54,7 +60,7 @@ set copyindent
 set expandtab
 set ts=2
 set shiftwidth=2
-set textwidth=80
+"set textwidth=80
 " }}}
 
 " Syntax {{{
