@@ -1,0 +1,248 @@
+#!/usr/bin/env bash
+
+readonly ARGS="$@"
+readonly PROGNAME=$(basename $0)
+readonly BASEDIR="$RACENOTE_BASE_PATH"
+DOWNLOAD_DEST=""
+
+function usage() {
+  cat <<-EOF
+
+	-----------------------------------------------------------------------------
+  WARNING: Your racenote base directory must be set. Edit this file or set the 
+           system variable: RACENOTE_BASE_PATH
+
+           Your base path is currently set to: $RACENOTE_BASE_PATH
+
+           e.g. Run this line in the terminal to use for this session or add
+                this line to your .bashrc or .zshrc to set for every session:
+
+                export RACENOTE_BASE_PATH="\$HOME/src/racenote"
+	-----------------------------------------------------------------------------
+
+  usage: ${PROGNAME} [database(s)] [action(s)] 
+
+	OPTIONS:
+	     r    racenote              Perform the actions for racenote
+	     t    transcribe            Perform the actions for transcribe
+
+	    -d    --download            Download the specified database(s)
+	    -r    --refresh             Refresh the specified database(s)
+	    -c    --clean               Remove database dump file(s)
+	    -h    --help                Display this screen
+	    -s    --setup               Setup system variables used by this program
+	          --paths               Display current path information
+
+  Not yet implemented
+	    -dob  --date-of-backup      Specify the date of the backup to retrieve or refresh
+	    -dp   --download-path       Specify the path of where to download the files. Default is each respective project directory.
+
+
+	Examples:
+
+	    Download and refresh racenote and transcribe then remove the downloaded dump files
+	    $ ${PROGNAME} racenote transcribe --download --refresh --clean
+
+	    Short hand to download and refresh racenote and transcribe then clean up files
+	    $ ${PROGNAME} r t -d -r -c
+
+	    Download and refresh racenote only
+	    $ ${PROGNAME} racenote -d -r
+
+	    Download racenote only
+	    $ ${PROGNAME} racenote -d
+
+	    Refresh transcribe only
+	    $ ${PROGNAME} transcribe -r
+EOF
+  exit 0
+}
+
+function paths() {
+  echo "Current paths:"
+  echo "RACENOTE_BASE_PATH=${RACENOTE_BASE_PATH}"
+  echo "RACENOTE_DOWNLOAD_PATH=${RACENOTE_DOWNLOAD_PATH}"
+}
+
+function set_system_vars() {
+  local user_shell_file=$1
+  local system_variable=$2
+  local path=$3
+
+  export "${system_variable}=\"${path}\"" >> $user_shell_file
+  echo "export ${system_variable}=\"${path}\"" >> $user_shell_file
+}
+
+function setup() {
+  local input_user_shell
+  local input_project_path
+  local input_download_path
+
+  cat <<-EOF
+
+	This will ask you for paths that this script needs and set them in your 
+	shell profile. If you would rather do this manually, set these variables:
+
+	RACENOTE_BASE_PATH       Path to the directory where your four RaceNote projects are.
+	RACENOTE_DOWNLOAD_PATH   Path to download the database dump files.
+EOF
+
+  echo "Which shell do you use? [bash]"
+  echo "1) bash"
+  echo "2) zsh"
+  read input_user_shell
+  case "$input_user_shell" in
+    "1")
+      user_shell_file="$HOME/.bashrc"
+      ;;
+    "2")
+      user_shell_file="$HOME/.zshrc"
+      ;;
+    *)
+      user_shell_file="$HOME/.bashrc"
+      ;;
+  esac
+
+  
+  echo "Enter the path to the directory that contains your racenote projects:"
+  read input_project_path
+  set_system_vars $user_shell_file "RACENOTE_PROJECT_PATH" $input_project_path
+
+
+  echo "Enter the path of the directory to download the database files to:"
+  read input_download_path
+  set_system_vars $user_shell_file "RACENOTE_DOWNLOAD_PATH" $input_download_path
+}
+
+function check_args() {
+
+  # The project base directory must be set
+  if [ "$RACENOTE_BASE_PATH" == "" ]; then
+    cat <<- EOF
+	    A base directory for your RaceNote projects must be set. Please set it 
+	    using 'export RACENOTE_BASE_PATH="/path/to/racenote_projects"' or edit 
+	    RACENOTE_BASE_PATH in this file.
+EOF
+    exit 0
+  fi
+
+  # Check if a global download path has been set
+  DOWNLOAD_DEST="$BASEDIR"
+  if [ "$RACENOTE_DOWNLOAD_PATH" != "" ]; then
+    DOWNLOAD_DEST=$RACENOTE_DOWNLOAD_PATH
+  fi
+
+  for arg in $ARGS; do
+    case "$arg" in
+      r | racenote)
+        readonly INCLUDE_RACENOTE=true
+        ;;
+      t | transcribe)
+        readonly INCLUDE_TRANSCRIBE=true
+        ;;
+      -d | --download)
+        readonly DOWNLOAD=true
+        ;;
+      -r | --refresh)
+        readonly REFRESH=true
+        ;;
+      -c | --clean)
+        readonly CLEAN=true
+        ;;
+      -s | --setup)
+        setup
+        exit 0
+        ;;
+      --paths)
+        paths
+        exit 0
+        ;;
+      -h | --help)
+        usage
+        ;;
+    esac
+  done
+
+  if [ "$INCLUDE_RACENOTE" != true ] && [ "$INCLUDE_TRANSCRIBE" != true ]; then
+    usage
+  fi
+}
+
+function clean() {
+  local path=$1
+  local filename=$2
+
+  (cd $path && rm $filename)
+}
+
+function download_db() {
+  local bucket=$1
+  local filename=$2
+
+  # Strip bucket name from dump file
+  local len=${#bucket}+1
+  local base_file="${filename:$len}"
+
+  echo "Downloading ${filename} to ${DOWNLOAD_DEST}/${base_file}..."
+  aws s3 cp s3://rn-db-dumps/${filename} "${DOWNLOAD_DEST}/${base_file}" 
+}
+
+function check_redis() {
+  local result="$(redis-cli ping)"
+  if [ "$result" != "PONG" ]; then
+    echo "Refreshing transcribe requires redis to be running."
+    exit 0
+  fi
+}
+
+function refresh_db() {
+  local bucket=$1
+  local path=$2
+  local file=$3
+
+  echo "Refreshing ${bucket} with ${file}"
+  (cd $path && bundle exec rails db:refresh "${DOWNLOAD_DEST}/${file}")
+}
+
+function download_and_refresh() {
+  local aws_bucket=$1
+  local project_path=$2
+
+  if [ "$DOWNLOAD" ]; then
+    # Get latest pgdump filename from AWS
+    local dump_file=`aws s3 ls s3://rn-db-dumps/$aws_bucket/ --recursive | sort | tail -n 1 | awk '{print $4}'`
+    download_db $aws_bucket $dump_file
+  fi
+
+  if [ "$REFRESH" ]; then
+    # Get file from download path
+    local local_file=`ls -alF $RACENOTE_DOWNLOAD_PATH/$aws_bucket | sort -r | tail -n 1 | awk '{print $9}'`
+
+    # Transcribe requires redis to be running
+    if [ "$aws_bucket" == "transcribe" ]; then
+      check_redis
+    fi
+    refresh_db $aws_bucket $project_path $dump_file
+  fi
+
+  if [ "$CLEAN" ]; then
+    clean $RACENOTE_DOWNLOAD_PATH $dump_file
+  fi
+}
+
+function main() {
+  check_args
+
+  readonly local TODAY=$(date +%Y%m%d)
+
+  if [ "$INCLUDE_RACENOTE" ]; then
+    download_and_refresh "racenote" "$BASEDIR/racenote"
+  fi
+
+  if [ "$INCLUDE_TRANSCRIBE" ]; then
+    download_and_refresh "transcribe" "$BASEDIR/transcribe"
+  fi
+  
+  echo "done"
+}
+main
