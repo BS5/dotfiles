@@ -66,3 +66,18 @@ Restore local databases
 $ pg_restore --clean --dbname=database_name --no-owner --jobs=2 -v PATH_TO_PGDUMP
 ```
 
+SSH Key
+
+
+Change passphrase
+
+Create a new key
+
+```
+ssh-keygen -t rsa
+```
+
+```
+ssh-keygen -p -f ~/.ssh/id_dsa
+```
+
