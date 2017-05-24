@@ -85,6 +85,9 @@
 	st = status
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	g = grep --break --heading --line-number
+	praise = blame
+	recent = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format=\"%(refname:short)\"
+	today = log --since=00:00:00 --all --oneline --no-merges --author=brendan.schulz@gmail.com
 #	up = pull --rebase --autostash
 # }}}
 
