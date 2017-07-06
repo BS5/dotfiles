@@ -30,6 +30,7 @@ brew install wget
 brew install vim
 brew install git
 brew install tig
+brew install gist
 brew install coreutils
 brew install node
 brew install redis
