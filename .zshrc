@@ -33,6 +33,9 @@ alias glg='git log --oneline --abbrev-commit --all --graph --decorate --color'
 alias gflg="git log --graph --pretty=format:'%Cred%h%Creset %C(bold blue)%an%C(reset) - %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias grm='git rm $(git ls-files --deleted)'
 
+# Gist Aliases
+alias gist='gist -s -c' # Copy resulting gist url to clipboard
+
 # ls Aliases to match servers
 # alias ls='ls --color=auto'
 alias ll='ls -alF'
