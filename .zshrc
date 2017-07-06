@@ -56,9 +56,6 @@ alias be='bundle exec'
 alias ber='bundle exec rake'
 alias berc='bundle exec rails console'
 
-# RaaceNote
-alias rnworkers='COUNT=2 QUEUES=demo,raceday bundle exec rails resque:workers'
-
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
@@ -94,11 +91,6 @@ export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
 # NPM
 export PATH=/usr/local/share/npm/bin:$PATH
-
-#######################################################
-# RACENOTE
-source $HOME/.racenote
-######################################################
 
 # Set case sensitivity off
 set completion-ignore-case on
