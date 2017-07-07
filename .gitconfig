@@ -1,67 +1,86 @@
 # core {{{
 [core]
-	excludesfile = /Users/brendan/.gitignore_global
-	editor = /usr/bin/vim
+  excludesfile = ~/.gitignore_global
+  editor = /usr/bin/vim
 # }}}
 
 # user {{{
 [user]
-	name = Brendan Schulz
-	email = brendan.schulz@gmail.com
+  name = Brendan Schulz
+  email = brendan.schulz@gmail.com
 # }}}
 
 # color {{{
 [color]
-	branch = auto
-	diff = auto
-	status = auto
-	ui = auto
+  branch = auto
+  diff = auto
+  status = auto
+  ui = auto
 
 [color "branch"]
-	current = red reverse
-	local = blue
-	remote = green
+  current = red reverse
+  local = blue
+  remote = green
 
 [color "diff"]
-	meta = yellow
-	frag = magenta
-	old = red bold
-	new = green
-	plain = white
+  meta = yellow
+  frag = magenta
+  old = red bold
+  new = green
+  plain = white
 
 [color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
+  added = yellow
+  changed = green
+  untracked = cyan
 
 # }}}
 
-# push/pull/diff/options {{{
+# push/pull/options {{{
 
 [push]
-	default = matching
+  default = matching
+  followTags = true
+
 [pull]
-	default = current
-[diff]
-	memonicprefix = true
-	renames = copies
-	tool = diffmerge
+  default = current
+
 [branch]
-	autosetuprebase = always
+  autosetuprebase = always
+
 [apply]
-	whitespace = nowarn
+  whitespace = nowarn
 
 # }}}
 
-# difftools {{{
+# difftools and merging {{{
+[diff]
+  memonicprefix = true
+  renames = copies
+  tool = opendiff
 
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+[difftool]
+  prompt = false
+
+[difftool "diffmerge"]
+  cmd = /usr/local/bin/diffmerge \"$LOCAL\" \"$REMOTE\"
+  #cmd = /usr/local/bin/diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+
+[merge]
+  tool = diffmerge
+
+[mergetool]
+  prompt = false
 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
+
+[mergetool "diffmerge"]
+  trustExitCode = true
+  #cmd = /usr/local/bin/diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+  cmd = /usr/local/bin/diffmerge \"$LOCAL\" \"$REMOTE\"
+
 # }}}
 
 
@@ -69,52 +88,43 @@
 # aliases {{{
 
 [alias]
-	ig = update-index --assume-unchanged
-	unig = update-index --no-assume-unchanged
-	iged = !git ls-files -v | grep "^[[:lower:]]"
-	bp = big-picture
+  ig = update-index --assume-unchanged
+  unig = update-index --no-assume-unchanged
+  iged = !git ls-files -v | grep "^[[:lower:]]"
+  praise = blame
+  recent = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format=\"%(refname:short)\"
+  cp = cherry-pick
+  # Cleaning
   cl = "!git branch --merged | grep -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
   cleanlocal = "!git branch --merged | grep -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
   cr = "!git branch -r --merged | grep -v '\\*\\|master\\|develop' | sed 's/origin\\///' | xargs -n 1 git push --delete origin"
   cleanremote = "!git branch -r --merged | grep -v '\\*\\|master\\|develop' | sed 's/origin\\///' | xargs -n 1 git push --delete origin"
-	br = branch
-	logp = log --pretty=format:\"%h %s\" --graph
-	caa = commit -a --amend -C HEAD
-	cm = commit -m
-	cam = commit -am
-	st = status
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-	g = grep --break --heading --line-number
-	praise = blame
-	recent = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format=\"%(refname:short)\"
-	today = log --since=00:00:00 --all --oneline --no-merges --author=brendan.schulz@gmail.com
-#	up = pull --rebase --autostash
+  # Logging
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  logp = log --pretty=format:\"%h %s\" --graph
+  today = log --since=00:00:00 --all --oneline --no-merges --author=brendan.schulz@gmail.com
+  # Tools
+  g = grep --break --heading --line-number
+  bp = big-picture
+  
 # }}}
 
 [filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
-
-[difftool]
-	prompt = false
+  clean = git-media-clean %f
+  smudge = git-media-smudge %f
 
 [rerere]
-	enabled = true
+  enabled = true
 
 [rebase]
-	autosquash = true
-[difftool "diffmerge"]
-	cmd = /usr/local/bin/diffmerge \"$LOCAL\" \"$REMOTE\"
-[merge]
-	tool = diffmerge
-[mergetool "diffmerge"]
-	trustExitCode = true
-	cmd = /usr/local/bin/diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+  autosquash = true
 [filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+[fetch]
+  prune = true
 [grep]
-	extendRegexp = true
-	lineNumber = true
+  extendRegexp = true
+  lineNumber = true
