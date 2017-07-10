@@ -33,7 +33,7 @@ sudo pmset lidwake 0
 ############################################################
 
 # Save screenshots to desktop and disable the horrific drop-shadow.
-defaults write com.apple.screencapture location -string "${HOME}/Desktop/Screenshots"
+defaults write com.apple.screencapture location "${HOME}/Desktop/Screenshots"
 defaults write com.apple.screencapture type -string "png"
 defaults write com.apple.screencapture disable-shadow -bool true
 
