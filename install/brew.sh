@@ -54,6 +54,7 @@ apps=(
   openssl --force        # SSL/TLS cryptography library
   yarn                   # JavaScript package manager
   watchman               # Watch files and take action when they change
+  zsh-completions        # Additional completion definitions for zsh
 
 # Other
   wireshark --with-qt    # Graphical network analyzer and capture tool
