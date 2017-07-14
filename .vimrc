@@ -46,7 +46,7 @@ set cursorline
 " }}}
 
 " Search {{{
-set hlsearch
+set nohlsearch
 set incsearch
 set ignorecase
 set smartcase
@@ -103,6 +103,8 @@ let g:netrw_winsize=50
 " }}}
 
 " Plugins {{{
+let vim_markdown_preview_browser='Google Chrome'
+let vim_markdown_preview_github=1
 " }}}
 
 
