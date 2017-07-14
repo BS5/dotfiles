@@ -64,7 +64,7 @@
 
 [difftool "diffmerge"]
   cmd = /usr/local/bin/diffmerge \"$LOCAL\" \"$REMOTE\"
-  #cmd = /usr/local/bin/diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+  # cmd = /usr/local/bin/diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 
 [merge]
   tool = diffmerge
@@ -73,13 +73,13 @@
   prompt = false
 
 [mergetool "sourcetree"]
-  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
 
 [mergetool "diffmerge"]
   trustExitCode = true
-  #cmd = /usr/local/bin/diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
-  cmd = /usr/local/bin/diffmerge \"$LOCAL\" \"$REMOTE\"
+  cmd = /usr/local/bin/diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+  # cmd = /usr/local/bin/diffmerge \"$LOCAL\" \"$REMOTE\"
 
 # }}}
 
@@ -128,3 +128,6 @@
 [grep]
   extendRegexp = true
   lineNumber = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
