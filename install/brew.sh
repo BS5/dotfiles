@@ -59,6 +59,7 @@ apps=(
   awscli                 # Official Amazon AWS command-line interface
   rbenv-default-gems     # Auto-installs gems for Ruby installs
   jq                     # JSON parser
+  grip                   # GitHub Markdown previewer
 
   # Android
   ant                    # Java build tool
