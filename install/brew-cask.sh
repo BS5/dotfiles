@@ -7,6 +7,7 @@ brew tap caskroom/versions
 # Install packages
 apps=(
   android-sdk            # 
+  android-ndk            # 
   android-studio         # 
   atom                   # 
   caffeine               # 
@@ -18,6 +19,7 @@ apps=(
   google-drive           # 
   gyazo                  # 
   firefox                # 
+  intel-haxm             #
   imagealpha             # 
   imageoptim             # 
   intellij-idea          # 

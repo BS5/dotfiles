@@ -61,6 +61,7 @@ apps=(
   jq                     # JSON parser
   markdown               # Text-to-HTML conversion tool
   grip                   # GitHub Markdown previewer
+  jenv                   # Manage your Java environment
 
   # Android
   ant                    # Java build tool
