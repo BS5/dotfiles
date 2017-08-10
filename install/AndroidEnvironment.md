@@ -11,50 +11,7 @@ could end up with multiple copies of everything.
 
 ## Java
 
-1. Install Java. At the time of this writing, Java 1.8 will be installed.
-
-`brew cask install java`
-
-2. Install jenv to manage Java versions. This could be skipped but I did it
-and want to document it.
-
-`brew install jenv`
-
-3. Tell jenv that Java is installed.
-
-`jenv add /Library/Java/JavaVirtualMachines/jdk1.8.0.131.jdk/Contents/Home/`
-
-4. Set Java versions
-
-`jenv global oracle64-1.8.0.131
-
-
-**Verify your Java installation with these commands:**
-
-`which java` 
-
-Output: 
-```
-/Users/username/.jenv/java
-```
-
-`java -version`
-
-Output:  
-```
-java version "1.8.0_131"
-Java(TM) SE Runtime Environment (build 1.8.0_131-b11)
-Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
-```
-
-`/usr/libexec/java_home`
-
-Output:
-```
-/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home
-```
-
-
+I now recommend using the embedded JDK that comes with Android Studio. Using your own could cause issues.
 
 ## Android
 
