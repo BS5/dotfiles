@@ -86,11 +86,28 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 # User bin
 export PATH=~/bin:$PATH
 
+# Android
+export JAVA_HOME=`/usr/libexec/java_home -v '1.8*'`
+export ANDROID_HOME="/usr/local/share/android-sdk"
+export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
+export ANDROID_NDK_HOME="/usr/local/share/android-ndk"
+
+# ANT
+export ANT_HOME=/usr/local/opt/ant/libexec
+
 # Gradle
 export GRADLE_HOME=/usr/local/bin/gradle
 
 # Groovy
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
+
+# Paths for Android Development
+export PATH=$ANT_HOME/bin:$PATH
+export PATH=$MAVEN_HOME/bin:$PATH
+export PATH=$GRADLE_HOME/bin:$PATH
+export PATH=$ANDROID_HOME/tools:$PATH
+export PATH=$ANDROID_HOME/platform-tools:$PATH
+export PATH=$ANDROID_HOME/build-tools/26.0.0:$PATH
 
 # NPM
 export PATH=/usr/local/share/npm/bin:$PATH
