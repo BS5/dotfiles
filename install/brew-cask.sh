@@ -31,6 +31,7 @@ apps=(
   slack                  # 
   sourcetree             # 
   spectacle              # 
+  sublime-text           # 
   vagrant                # 
   virtualbox             # 
   vlc                    # 
