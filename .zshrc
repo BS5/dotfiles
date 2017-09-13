@@ -13,7 +13,12 @@ export TERM="xterm-256color"
 # https://github.com/caiogondim/bullet-train-oh-my-zsh-theme
 ZSH_THEME="bullet-train"
 
+# Set default user
 export DEFAULT_USER="bschulz"
+
+# Set default editor
+export EDITOR=vim
+export VISUAL=vim
 
 # Quicker navigation
 alias ..="cd .."
