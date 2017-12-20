@@ -34,6 +34,7 @@ alias gc='git commit -m' # requires you to type a commit message
 alias gp='git push'
 alias gl='git pull'
 alias gu='git up'
+alias gum='git up; be rails db:migrate'
 alias glg='git log --oneline --abbrev-commit --all --graph --decorate --color'
 alias gflg="git log --graph --pretty=format:'%Cred%h%Creset %C(bold blue)%an%C(reset) - %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias grm='git rm $(git ls-files --deleted)'
@@ -122,6 +123,9 @@ set completion-ignore-case on
 
 # rbenv
 eval "$(rbenv init -)"
+
+# Output IP and Disk information
+source "${HOME}/bin/info.sh"
 
 # Set command mode to vi style
 set -o vi
