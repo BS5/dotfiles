@@ -2,6 +2,28 @@
 
 These are helpful commands that I want to keep around and remember.
 
+## Checksums
+
+Generate SHA 256 checksum (used by homebrew)
+
+```
+shasum -a 256 /path/to/file
+```
+
+Generate SHA 1 checksum
+
+```
+shasum -a 1 /path/to/file
+```
+
+
+Generate MD5 checksum
+
+```
+md5 /path/to/file
+```
+
+
 ## Disk Space
 
 List the directories and files in the current directory and sort by 
