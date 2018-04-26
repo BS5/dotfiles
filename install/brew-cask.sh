@@ -6,35 +6,34 @@ brew tap caskroom/versions
 
 # Install packages
 apps=(
-  android-sdk            # 
-  android-ndk            # 
-  android-studio         # 
-  atom                   # 
-  caffeine               # 
-  dash                   # 
-  diffmerge              # 
+  android-sdk            # Android Software Development Kit
+  android-ndk            # Android NDK
+  android-studio         # Android Studio
+  atom                   # Atom Text Editor
+  caffeine               # System Utility
+  dash                   # Documentation
+  diffmerge              # Merge tool
   geektool               # 
   github-desktop         # 
-  google-chrome          # 
-  google-drive           # 
+  google-chrome          # Chrome Web Browser
+  google-drive           # Google Drive Utility
   gyazo                  # 
-  firefox                # 
-  intel-haxm             #
+  firefox                # Firefox Web Browser
+  intel-haxm             # Intel Hardware Accelerated Execution Manager
   imagealpha             # 
   imageoptim             # 
-  intellij-idea          # 
-  intellij-idea-ce       # 
-  iterm2                 # 
-  java                   # Java Standard Edition Development Kit
-  macdown                # 
+  intellij-idea          # Development IDE
+  intellij-idea-ce       # Development IDE
+  iterm2                 # Terminal
+  macdown                # Markdown Editor
   screenflow             # 
-  slack                  # 
-  sourcetree             # 
-  spectacle              # 
-  sublime-text           # 
-  vagrant                # 
-  virtualbox             # 
-  vlc                    # 
+  slack                  # Community Communication Tool
+  sourcetree             # Visual Git tool
+  spectacle              # App window managment
+  sublime-text           # Text editor
+  vagrant                # Virtual machine management
+  virtualbox             # Virtual machine management
+  vlc                    # Video player
 )
 brew cask install "${apps[@]}"
 
