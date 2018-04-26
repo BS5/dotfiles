@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Generate a string of random characters. Defaults
+# to 24 characters unless an argument is provided.
+
+CHAR_COUNT=24
+
+if [[ -n "$1" ]]; then
+  CHAR_COUNT=$1
+fi
+
+openssl rand -base64 $CHAR_COUNT
