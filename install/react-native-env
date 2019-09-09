@@ -2,12 +2,23 @@
 
 # Installs tools for React Native development environment
 
+command -v xcodebuild >/dev/null 2>&1 || { echo >&2 "Install Xcode first. Aborting."; exit 1; }
+
+# iOS and Brew
 xcode-select --install
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew install rbenv
 rbenv install 2.6.3
 rbenv global 2.6.3
 gem install xcodeproj
+
+# Android
+brew cask install android-studio
+brew cask install android-sdk
+brew cask install android-ndk
+
+# Node
+brew install yarn
 brew install node
 brew install watchman
 brew tap AdoptOpenJDK/openjdk
