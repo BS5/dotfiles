@@ -2,31 +2,77 @@
 
 # Installs tools for Android development environment
 
-# Android
-brew cask install android-studio
-brew cask install android-sdk
-brew cask install android-ndk
+read -p "Install Android Studio? [Y/n] " -n1 yn
+case "$yn" in
+  [Yy]) brew cask install android-studio;;
+esac
+
+###########################################################################
+#
+# DO NOT INSTALL THE SDK USING BREW, INSTALL THE SDK THROUGH ANDROID STUDIO
+#
+###########################################################################
+# echo
+# read -p "Install Android SDK? [Y/n] " -n1 yn
+# case "$yn" in
+#   [Yy]) brew cask install android-sdk;;
+# esac
+
+# echo
+# read -p "Install Android NDK? [Y/n] " -n1 yn
+# case "$yn" in
+#   [Yy]) brew cask install android-ndk;;
+# esac
+###########################################################################
+
+echo
+read -p "Install Gradle? [Y/n] " -n1 yn
+case "$yn" in
+  [Yy]) brew install gradle;;
+esac
 
 SHELL_FILE=
-if [[ $(echo $0) == "-bash" ]]; then
-  if [[ -f "$HOME/.bashrc" ]]; then
-    SHELL_FILE="$HOME/.bashrc"
-  else
+case $SHELL in
+  */zsh) 
+    SHELL_FILE="$HOME/.zshrc"
+    ;;
+  */bash)
     SHELL_FILE="$HOME/.bash_profile"
-  fi
-elif [[ $(echo $0) == "-zsh" ]]; then
-  SHELL_FILE="$HOME/.zshrc"
-else
-  echo "I don't know what shell you are using."
-  exit 1
-fi
+    ;;
+  *)
+    echo "I only detect ZSH and BASH. If you are using a different shell add the exports manually."
+    exit 1
+    ;;
+esac
 
-# echo "export ANDROID_HOME=$HOME/Library/Android/sdk" >> $SHELL_FILE
-echo "export ANDROID_HOME=/usr/local/share/android-sdk" >> $SHELL_FILE
-echo "export ANDROID_SDK_ROOT=/usr/local/share/android-sdk" >> $SHELL_FILE
-echo "export PATH=$PATH:$ANDROID_HOME/emulator" >> $SHELL_FILE
-echo "export PATH=$PATH:$ANDROID_HOME/tools" >> $SHELL_FILE
-echo "export PATH=$PATH:$ANDROID_HOME/tools/bin" >> $SHELL_FILE
-echo "export PATH=$PATH:$ANDROID_HOME/platform-tools" >> $SHELL_FILE
+echo
+read -p "Add shell variables to path ($SHELL_FILE)? [Y/n] " -n1 yn
+case "$yn" in
+  [Yy]) 
+    echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> $SHELL_FILE
+    echo 'export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk' >> $SHELL_FILE
 
+    echo 'export PATH=$PATH:$ANDROID_HOME/emulator' >> $SHELL_FILE
+    echo 'export PATH=$PATH:$ANDROID_HOME/tools' >> $SHELL_FILE
+    echo 'export PATH=$PATH:$ANDROID_HOME/tools/bin' >> $SHELL_FILE
+    echo 'export PATH=$PATH:$ANDROID_HOME/platform-tools' >> $SHELL_FILE
+    ;;
+esac
+
+echo
+read -p "Install Android SDK platforms and tools? [Y/n] " -n1 yn
+case "$yn" in
+  [Yy])
+    sdkmanager \
+      "platform-tools" \
+      "platforms;android-28" \
+      "platforms;android-29" \
+      "build-tools;28.0.3" \
+      "build-tools;29.0.2" \
+      "system-images;android-28;google_apis;x86_64" \
+      "system-images;android-29;google_apis;x86_64"
+    ;;
+esac
+
+echo
 echo "All done."
