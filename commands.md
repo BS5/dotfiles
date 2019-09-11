@@ -36,8 +36,8 @@ $ du -sh * | gsort -h
 Display free disk space
 
 ```
-$ df / -k # of the root volume
-$ df -k # of all volumes
+$ df -H / # of the root volume
+$ df -H # of all volumes
 ```
 
 ## Files
