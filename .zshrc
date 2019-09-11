@@ -1,133 +1,64 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
 
-export TERM="xterm-256color"
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-# ZSH_THEME="powerlevel9k/powerlevel9k"
-
-# Theme from:
-# https://github.com/caiogondim/bullet-train-oh-my-zsh-theme
-ZSH_THEME="bullet-train"
-
-# Set default user
-export DEFAULT_USER="bschulz"
-
-# Set default editor
-export EDITOR=vim
-export VISUAL=vim
-
-# Quicker navigation
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-
-# Git Aliases
-alias g='git'
-alias gs='git status'
-alias ga='git add .'
-alias gc='git commit -m' # requires you to type a commit message
-alias gp='git push'
-alias gl='git pull'
-alias gu='git up'
-alias gum='git up; be rails db:migrate'
-alias glg='git log --oneline --abbrev-commit --all --graph --decorate --color'
-alias gflg="git log --graph --pretty=format:'%Cred%h%Creset %C(bold blue)%an%C(reset) - %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-alias grm='git rm $(git ls-files --deleted)'
-
-# Gist Aliases
-alias gist='gist -s -c' # Copy resulting gist url to clipboard
-
-# ls Aliases to match servers
-# alias ls='ls --color=auto'
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -alCF'
-
-# Lock screen
-alias lock='/System/Library/CoreServices/Menu\ Extras/user.menu/Contents/Resources/CGSession -suspend'
-
-# Set vi editor to vim
-alias vi="vim"
-
-# Set v to vagrant
-alias v="vagrant"
-
-# Clear DNS cache
-alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;echo 'cache flushed'"
-
-# Bundle Exec
-alias be='bundle exec'
-alias ber='bundle exec rake'
-alias berc='bundle exec rails console'
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-COMPLETION_WAITING_DOTS="true"
-
-# Uncomment following line if you want to  show in the command execution time stamp
-# in the history command output. The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|
-# yyyy-mm-dd
+ZSH_THEME="powerlevel10k/powerlevel10k" # robbyrussel, bullet-train
 HIST_STAMPS="mm/dd/yyyy"
+HISTSIZE=9999
+HISTFILESIZE=2000
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(osx git git-flow ruby rails rake pow powder xcode gradle)
+plugins=(adb docker git gradle jsontools npm osx postgres rbenv rsync ruby svn-fast-info xcode)
 
 source $ZSH/oh-my-zsh.sh
 
-# iTerm2 Shell Integrations
-source ~/.iterm2_shell_integration.`basename $SHELL`
+# User configuration
+export LANG=en_US.UTF-8
+export EDITOR='vim'
+export VISUAL='vim'
 
-# Base system paths
-export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/Applications
+bindkey -v
 
-# Homebrew
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+source $HOME/.aliases
 
-# User bin
-export PATH=~/bin:$PATH
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home"
 
-# Android
-export JAVA_HOME=`/usr/libexec/java_home -v '1.8*'`
-export ANDROID_HOME="/usr/local/share/android-sdk"
-export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
-export ANDROID_NDK_HOME="/usr/local/share/android-ndk"
+# ANDROID
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
 
-# ANT
-export ANT_HOME=/usr/local/opt/ant/libexec
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-# Gradle
-export GRADLE_HOME=/usr/local/bin/gradle
+# Add path for brew
+export PATH="$PATH:/usr/local/sbin"
 
-# Groovy
-export GROOVY_HOME=/usr/local/opt/groovy/libexec
+# Add path for fastlane
+export PATH="$PATH:$HOME/.fastlane/bin"
 
-# Paths for Android Development
-export PATH=$ANT_HOME/bin:$PATH
-export PATH=$MAVEN_HOME/bin:$PATH
-export PATH=$GRADLE_HOME/bin:$PATH
-export PATH=$ANDROID_HOME/tools:$PATH
-export PATH=$ANDROID_HOME/platform-tools:$PATH
-export PATH=$ANDROID_HOME/build-tools/26.0.0:$PATH
+# Add path for custom scripts
+export PATH="$PATH:$HOME/bin"
 
-# NPM
-export PATH=/usr/local/share/npm/bin:$PATH
-
-# Set case sensitivity off
-set completion-ignore-case on
-
-# rbenv
+# Ruby and rbenv
+export PATH="$PATH:$HOME/.rbenv/bin"
 eval "$(rbenv init -)"
 
-# Output IP and Disk information
-source "${HOME}/bin/info.sh"
+$HOME/bin/geektool/ips
 
-# Set command mode to vi style
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Custom scripts
+
+source $HOME/notes/notes
+source $HOME/.env.supportworks
+
+# Set command line mode to vi
 set -o vi
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+# iTerm2 Shell Integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

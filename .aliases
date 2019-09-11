@@ -1,0 +1,72 @@
+# Custom User Aliases
+
+# -------------------------------------------------------------------
+# General terminal helpers
+
+# Make grep easier
+alias -g G=' | grep -i'
+
+# Python tool to format JSON files. Can be used in vi, terminal or elsewhere
+alias pj='python -m json.tool'
+
+# Serve the current directory as a website and watch files for changes
+alias wd='browser-sync start -s -f . --no-notify --host 0.0.0.0 --port 6500'
+
+# Lock screen
+alias lock='/System/Library/CoreServices/Menu\ Extras/user.menu/Contents/Resources/CGSession -suspend'
+
+# Flush DNS cache
+alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;echo 'cache flushed'"
+
+# -------------------------------------------------------------------
+# Repository helpers
+
+alias sup='svn info --show-item revision && svn up'
+
+# Improve SVN LOG
+# Must have svn-fancy-log installed: https://github.com/mnpk/svn-fancy-log
+function slog() {
+  re_numbers='^[0-9]+$'
+  ARGS="$@"
+  if [[ $1 =~ $re_numbers ]]; then
+    ARGS="-l $1"
+  fi
+  svn log $ARGS | svn-fancy-log
+}
+
+# -------------------------------------------------------------------
+# iOS development helpers
+
+alias pb='/usr/libexec/PlistBuddy'
+
+# -------------------------------------------------------------------
+# Android development helpers
+
+# Make './gradlew' easier
+alias gw='./gradlew'
+
+# Firebase debug commands for Android emulators
+alias fbdebug_start="adb shell setprop debug.firebase.analytics.app com.fsi_productionview"
+alias fbdebug_stop="adb shell setprop debug.firebase.analytics.app .none."
+
+# -------------------------------------------------------------------
+# React Native development helpers
+alias rn='react-native'
+
+function rn-clean() {
+  watchman watch-del-all
+  rm -rf $TMPDIR/react-*
+  rm -rf $TMPDIR/haste-*
+  rm -rf $TMPDIR/metro-*
+  npm start -- --reset-cache
+}
+
+# -------------------------------------------------------------------
+# OS X helpers
+alias add_dock_space="defaults write com.apple.dock persistent-apps -array-add '{\"tile-type\"=\"spacer-tile\";}';killall Dock"
+
+# -------------------------------------------------------------------
+# PostgreSQL
+alias pg_start='launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist'
+alias pg_stop='launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist'
+

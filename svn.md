@@ -1,5 +1,11 @@
 # SVN
 
+## Keep branch up to date with trunk
+
+```
+svn merge ^/trunk
+```
+
 ## Improve svn log
 
 Install [svn-fancy-log](https://github.com/mnpk/svn-fancy-log)
