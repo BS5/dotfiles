@@ -52,7 +52,6 @@ export NVM_DIR="$HOME/.nvm"
 # Custom scripts
 
 source $HOME/notes/notes
-source $HOME/.env.supportworks
 
 # Set command line mode to vi
 set -o vi
