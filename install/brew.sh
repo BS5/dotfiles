@@ -12,7 +12,6 @@ xcode-select --install
 # 
 apps=(
   # OS X Utilities
-  dark-mode              # Control the macOS dark mode from the command-line
   calc                   # Arbitrary precision calculator
   ffmpeg                 # Play, record, convert, and stream audio and video
 
