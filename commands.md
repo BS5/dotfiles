@@ -107,3 +107,14 @@ ssh-keygen -t rsa
 ssh-keygen -p -f ~/.ssh/id_dsa
 ```
 
+## Github Technique
+
+<details>
+  <summary>Details and Summary</summary>
+
+  More information would go here.  
+
+  * Can use formatting
+
+</details>
+
