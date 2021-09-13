@@ -1,0 +1,42 @@
+# Android Shell Configuration
+
+# JAVA Configuration
+export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+export JDK_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+# ANDROID_HOME is deprecated, use ANDROID_SDK_ROOT instead
+# export ANDROID_HOME="/mnt/w/android-sdk/"
+
+WINDOWS_ANDROID_SDK_PATH="/mnt/d/Android/sdk"
+WINDOWS_ANDROID_EMULATOR="/mnt/d/.android"
+
+# Installation directory of Android SDK package.
+export ANDROID_SDK_ROOT="$WINDOWS_ANDROID_SDK_PATH"
+
+# Installation directory of Android NDK package.
+# export ANDROID_NDK_ROOT=""
+
+# Location of SDK related data/user files.
+export ANDROID_SDK_HOME="$ANDROID_SDK_ROOT"
+
+# Emulator Environment
+
+# Location of emulator-specific data files.
+export ANDROID_EMULATOR_HOME="$WINDOWS_ANDROID_EMULATOR"
+
+# Location of AVD-specific files.
+export ANDROID_AVD_HOME="$ANDROID_EMULATOR_HOME/.android/avd"
+
+# PATH
+export PATH="$ANDROID_SDK_ROOT/tools:$PATH"
+export PATH="$ANDROID_SDK_ROOT/tools/bin:$PATH"
+export PATH="$ANDROID_SDK_ROOT/platform-tools:$PATH"
+export PATH="$ANDROID_SDK_ROOT/emulator:$PATH"
+
+# Aliases
+alias gw="./gradlew"
+alias adb="adb.exe"
+alias emulator="emulator.exe"
+alias sdkmanager="sdkmanager.bat"
+

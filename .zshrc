@@ -1,63 +1,60 @@
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+export ZSH="/home/brendan/.oh-my-zsh"
 
-ZSH_THEME="powerlevel10k/powerlevel10k" # robbyrussel, bullet-train
+# ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+export VISUAL=vi
+export EDITOR="$VISUAL"
+
 HIST_STAMPS="mm/dd/yyyy"
-HISTSIZE=9999
+HISTCONTROL=ignoreboth
+HISTSIZE=1000
 HISTFILESIZE=2000
 
-plugins=(adb docker git gradle jsontools npm osx postgres rbenv rsync ruby svn-fast-info xcode)
+# export LANG=en_US.UTF-8
+# export LC_CTYPE=en_US.UTF-8
+
+# plugins=(adb docker git gradle jsontools npm osx postgres rbenv rsync ruby svn-fast-info xcode)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-export LANG=en_US.UTF-8
-export EDITOR='vim'
-export VISUAL='vim'
 
-bindkey -v
+# Dot files config
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
-source $HOME/.aliases
+# Subversion aliases
+alias sup="svn info --show-item revision && svn up"
 
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home"
-
-# ANDROID
-export ANDROID_HOME="$HOME/Library/Android/sdk"
-export ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
-
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-
-# Add path for brew
-export PATH="$PATH:/usr/local/sbin"
-
-# Add path for fastlane
-export PATH="$PATH:$HOME/.fastlane/bin"
-
-# Add path for custom scripts
-export PATH="$PATH:$HOME/bin"
-
-# Ruby and rbenv
-export PATH="$PATH:$HOME/.rbenv/bin"
+# Ruby config
+export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-$HOME/bin/geektool/ips
+# Android Development -------------------------------------
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+source "$HOME/.android-config"
 
-# Custom scripts
+# ---------------------------------------------------------
 
-source $HOME/notes/notes
+# NPM config
+export PATH="$HOME/.npm-global/bin:$PATH"
 
-# Set command line mode to vi
+# Vagrant config for WSL
+export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
+
+# Fun with cheat sheets
+function cs() {
+  curl -m 7 "https://cheat.sh/$1"
+}
+
+function G() {
+  grep -iR "$1" .
+}
+
+# Use vi on the command line
 set -o vi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-# iTerm2 Shell Integration
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
