@@ -10,7 +10,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k" # robbyrussel, bullet-train
 HIST_STAMPS="mm/dd/yyyy"
 HISTSIZE=9999
-HISTFILESIZE=2000
+HISTFILESIZE=9999
 
 plugins=(
   adb 
