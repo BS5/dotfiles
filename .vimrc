@@ -3,16 +3,17 @@
 "   Collapse all folds: zM
 "   Expand/collapse a fold: <space>
 
+let mapleader=","
+
 " Files {{{
 filetype off
 filetype plugin indent on
-let mapLeader="\\"
 set wildmode=full
 " }}}
 
 " Constraints {{{
-set history=1000
-set undolevels=1000
+set history=9999
+set undolevels=9999
 set nobackup
 set nowritebackup
 " }}}
@@ -45,9 +46,10 @@ nnoremap <space> za
 set nocompatible
 set ruler
 set number
+set relativenumber
 set cursorline
+set colorcolumn=120
 set nowrap
-" set colorcolumn=80
 " }}}
 
 " Search {{{
@@ -56,6 +58,14 @@ set incsearch
 set ignorecase
 set smartcase
 set showmatch
+set shortmess-=S
 " }}}
 
-" vim:foldmethod=marker:foldlevel=0
+" File Tabs
+nnoremap tn :tabnew<Space>
+nnoremap tk :tabnext<CR>
+nnoremap tj :tabprec<CR>
+nnoremap th :tabfirst<CR>
+nnoremap tl :tablast<CR>
+" }}}
+
